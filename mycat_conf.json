@@ -1,0 +1,22 @@
+{
+	"homePath": "D:\\workSpace\\python36_workSpace\\mycat_V2.0",
+	"server": {
+		"name": "mycat",
+		"version": "V2.0",
+		"service":
+		[{
+				"protocol": "HTTP/1.1",
+				"host": "127.0.0.1",
+				"port": "8080",
+				"init_thread_num": 1,
+				"max_thread_num": 5
+			}
+		]
+	},
+	"log": {
+		"logType": "file",
+		"logFilePath": "D:\\workSpace\\python36_workSpace\\mycat_V2.0\\logs",
+		"logLevel": "debug",
+		"logFormat": "[%Y%m%D %H%M%S : %s]"
+	}
+}
