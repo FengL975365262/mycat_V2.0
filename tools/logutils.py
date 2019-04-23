@@ -16,6 +16,7 @@ class Logger(object):
 		self.logFilePath = "D:\\workSpace\\python36_workSpace\\mycat_V2.0\\logs"
 		self.logLevel = "debug"
 		self.logFormat = "[ {0} ][{1}][ {2} ]"
+		self.logIO = None
 		if self.logType == 'file':
 			fileName = time.strftime('%Y%m%d',time.localtime())+'.log'
 			self.logIO = open(self.logFilePath+'\\'+fileName,'w')
@@ -24,7 +25,7 @@ class Logger(object):
 			self.writeLog = self.writeConsole
 		
 	def __del__(self):
-		if not self.logIO:
+		if self.logIO:
 			self.logIO.flush()
 			self.logIO.close()
 	

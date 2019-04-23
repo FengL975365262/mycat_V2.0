@@ -11,7 +11,7 @@ class WorkQueue:
 		self.event = Event()
 	
 	#提交任务
-	def put(self,work):
+	def addWork(self,work):
 		if not work:
 			return False
 		lock = Lock()
