@@ -9,7 +9,7 @@ class Session(object):
             self.SSESSIONID = self.createSessionID()
             self.LIFETIME = 30
             self._LASTTIME = TimeTool.changeTime(TimeTool.getTime(),self.LIFETIME,TimeTool.UNIT_MINUTE)
-            self.CONTEXT = {}
+            self.CONTEXT = {'sessionId':self.SSESSIONID}
 
         def createSessionID(self):
             randnum = random.randrange(99999999999999)

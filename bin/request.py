@@ -1,7 +1,11 @@
 # coding=utf8
 
+from tools.logutils import logger
+from bin.sessionManage import ssmanage
+
 def analysisHTTP(requestinfo):
     infos = requestinfo.split('\r\n')
+    logger.info('接收到的内容：'+ str(infos))
     request_action = infos[0].split(' ')
     request_method = request_action[0]
     request_url = request_action[1]
@@ -21,7 +25,7 @@ def analysisHTTP(requestinfo):
         if len(infolist) != 2: continue
         infodict.setdefault(infolist[0], infolist[1])
     setinfos(infodict)
-    print('\r\n收到' + request_method + '请求，请求内容如下：\r\n' + str(request.__dict__))
+   # print('\r\n收到' + request_method + '请求，请求内容如下：\r\n' + str(request.__dict__))
     return request
 
 
@@ -40,6 +44,8 @@ class HTTPRequest:
         self.accept_language = ''
         self.referer = ''
         self.params = {}
+        self.cookie = {}
+        self.sessionId = ''
 
     def setinfos(self, infodict):
         self.referer = infodict.get('Referer', '')
@@ -53,6 +59,11 @@ class HTTPRequest:
         self.accept_encoding = infodict.get('Accept-Encoding', '')
         self.accept_language = infodict.get('Accept-Language', '')
         self.params = self.analysisContent(infodict.get('content', ''))
+        self.cookie = self.analysisContent(infodict.get('Cookie', ''))
+        self.sessionId = self.cookie.get('sessionId',None)
+        logger.info('接收到的sessionid:{}'.format(self.sessionId))
+        self.sessionId = ssmanage.refreshSessions(self.sessionId)
+        logger.info('更新后的sessionid:{}'.format(self.sessionId))
 
     def analysisContent(self, content):
         if len(content) < 1: return {}
@@ -64,6 +75,8 @@ class HTTPRequest:
             params.setdefault(paramlist[0], paramlist[1])
         return params
 
+    def httpSession(self):
+        return ssmanage.getSession(self.sessionId)
 
 class POSTRequest(HTTPRequest):
 

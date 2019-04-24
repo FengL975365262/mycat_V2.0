@@ -1,5 +1,6 @@
 {
 	"homePath": "D:\\workSpace\\python36_workSpace\\mycat_V2.0",
+	"workPath": "D:\\workSpace\\python36_workSpace\\mycat_V2.0\\webapp",
 	"server": {
 		"name": "mycat",
 		"version": "V2.0",
@@ -7,16 +8,16 @@
 		[{
 				"protocol": "HTTP/1.1",
 				"host": "127.0.0.1",
-				"port": "8080",
+				"port": 8080,
 				"init_thread_num": 1,
 				"max_thread_num": 5
 			}
 		]
 	},
 	"log": {
-		"logType": "file",
+		"logType": "console",
 		"logFilePath": "D:\\workSpace\\python36_workSpace\\mycat_V2.0\\logs",
 		"logLevel": "debug",
-		"logFormat": "[%Y%m%D %H%M%S : %s]"
+		"logFormat": "[ {0} ][{1}][ {2} ]"
 	}
 }

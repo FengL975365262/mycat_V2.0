@@ -20,6 +20,7 @@ class HTTPResponse():
         self.access_control_allow_methods = 'GET,POST,OPTIONS'
         self.content_length = 0
         self.session_id = None
+        self.set_cookie = {}
         self.content = ''
 
     def packageresponse(self):
@@ -35,6 +36,7 @@ class HTTPResponse():
         response = response + 'Access-Control-Allow-Origin: ' + self.access_control_allow_origin + '\r\n'
         response = response + 'Access-Control-Allow-Headers: ' + self.access_control_allow_headers + '\r\n'
         response = response + 'Access-Control-Allow-Methods: ' + self.access_control_allow_methods + '\r\n'
+        response = response + 'Set-Cookie: ' + self.set_cookie + '\r\n'
         content = self.analisysContent()
         self.content_length = len(content)
         response = response + 'Content-Length: ' + str(self.content_length) + '\r\n\r\n'
@@ -50,6 +52,15 @@ class HTTPResponse():
             return content[:-1]
         return self.content
 
+    def setCookie(self,req):
+        set_cookie = ''
+        context = req.httpSession().CONTEXT
+        if isinstance(context, dict):
+            keys = context.keys()
+            for key in keys:
+                set_cookie = set_cookie + str(key) + '=' + str(context[key]) + ';'
+
+            self.set_cookie = set_cookie[:-1]
 
 def getresponse(requestHead, requestdict):
     response = ''

@@ -11,7 +11,6 @@ class ApplicationContext:
         return cls._instance
 
     def __init__(self):
-        if hasattr(self,'_instance'):return
         self.serverConfig = {}
         self.logConfig = {}
         self.serviceConfig = {}

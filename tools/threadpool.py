@@ -12,6 +12,7 @@ class ThreadPool:
         self.init_thread_num = 1
         self.max_thread_num = 8
         self.work_queue = queue.WorkQueue(80)
+        self.error_queue = queue.WorkQueue(40)
         self.alive_thread_num = 0
         self.max_wait_time = 300
 
@@ -45,7 +46,7 @@ class ThreadPool:
             self.checkThreads()
 
     def checkThreads(self):
-        changeNum = self.work_queue.count / (self.work_queue.size/self.max_thread_num) - self.alive_thread_num
+        changeNum = int(self.work_queue.count / (self.work_queue.size/self.max_thread_num)) - self.alive_thread_num
         if changeNum > 0:
             self.addWorker(changeNum)
         elif changeNum < 0:
@@ -54,7 +55,12 @@ class ThreadPool:
     def work(self, index):
         while self.threads[index].isRunning:
             job = self.work_queue.offer()
-            if job: job.run()
+            if job:
+                try:
+                    job.run()
+                except Exception as exp:
+                    self.error_queue.addWork(job)
+                    raise exp
             self.checkThreads()
         self.threads.remove(self.threads[index])
         self.alive_thread_num -= 1
