@@ -15,7 +15,7 @@
 		]
 	},
 	"log": {
-		"logType": "console",
+		"logType": "file",
 		"logFilePath": "D:\\workSpace\\python36_workSpace\\mycat_V2.0\\logs",
 		"logLevel": "debug",
 		"logFormat": "[ {0} ][{1}][ {2} ]"

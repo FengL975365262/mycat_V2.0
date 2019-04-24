@@ -19,7 +19,7 @@ class Connector:
         while True:
             logger.info('等待连接。。。')
             cli,addr = self.socketServer.accept()
-            cli.settimeout(5)
+            #cli.settimeout(1)
             job = Job(cli,addr)
             logger.info('{}发起请求，正在将任务添加到任务池。。。'.format(addr))
             logger.info('添加成功，当前任务池任务数{}'.format(self.pool.work_queue.count))
